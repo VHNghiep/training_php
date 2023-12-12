@@ -4,35 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+    .error {color: #FF0000;}
+    </style>
 </head>
 <body>
-    <form action="#" method="post">
+<?php
+$code = $user_name = $first_name = $last_name = $email = $date_of_birth = $gender = $hobbies = "";
+$code_err = $user_name_err = $first_name_err = $last_name_err = $email_err = $date_of_birth_err = $gender_err = $hobbies_err = "";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST["code"])) {
+        $code_err = "Code is required";
+    } else {
+        $name = test_input($_POST["name"]);
+    }
+
+
+}
+
+function test_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+?>
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
         <label for="code">Code</label>
         <input type="text" name="code" id="">
+        <span class="error">* <?php echo $code_err;?></span>
         <br><br>
         <label for="code">User Name</label>
         <input type="text" name="user_name" id="">
+        <span class="error">* <?php echo $user_name_err;?></span>
         <br><br>
         <label for="code">First Name</label>
         <input type="text" name="first_name" id="">
+        <span class="error">* <?php echo $user_name_err;?></span>
         <br><br>
         <label for="code">Last Name</label>
         <input type="text" name="last_name" id="">
+        <span class="error">* <?php echo $user_name_err;?></span>
         <br><br>
         <label for="code">Email</label>
-        <input type="text" name="email" id="">
+        <input type="email" name="email" id="">
+        <span class="error">* <?php echo $user_name_err;?></span>
         <br><br>
         <label for="code">Date Of Birth</label>
         <input type="date" name="date_of_birth" id="">
+        <span class="error">* <?php echo $user_name_err;?></span>
         <br><br>
         Gender:
         <input type="radio" name="gender" value="female">Female
         <input type="radio" name="gender" value="male">Male
         <input type="radio" name="gender" value="other">Other
-        <span class="error">* <?php echo $genderErr;?></span>
         <br><br>
         <label for="hobby">Hobby</label>
-        <select name="hobby" id="hobby" multiple>
+        <select name="hobbies" id="hobby" multiple>
         </select> 
         <button type="button" id="add_hobby">New Hobby</button>
         <br><br>
