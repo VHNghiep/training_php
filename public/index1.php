@@ -40,6 +40,7 @@ class App {
         return null;
     }
 
+    //Bai 3
     public function createMatrixNM($n, $m) {
         $arr = [];
         for($i = 0; $i < $n; $i++) {
@@ -117,12 +118,18 @@ class App {
                 if ($i == $j) {
                     $sum += $arr[$i][$j];
                 }
+                if ($i == 0 || $j == 0 || $i == $n || $j == $m) {
+                    $sum += $arr[$i][$j];
+                }
             }
         }
         return $sum;
     }
-}
 
+    public function getMaxOfRow($arrays) {
+        
+    }
+}
 
 $app = new App();
 $test = $app->createMatrixNM(2, 2);

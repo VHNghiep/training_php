@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="#" method="post">
+        <label for="code">Code</label>
+        <input type="text" name="code" id="">
+        <br><br>
+        <label for="code">User Name</label>
+        <input type="text" name="user_name" id="">
+        <br><br>
+        <label for="code">First Name</label>
+        <input type="text" name="first_name" id="">
+        <br><br>
+        <label for="code">Last Name</label>
+        <input type="text" name="last_name" id="">
+        <br><br>
+        <label for="code">Email</label>
+        <input type="text" name="email" id="">
+        <br><br>
+        <label for="code">Date Of Birth</label>
+        <input type="date" name="date_of_birth" id="">
+        <br><br>
+        Gender:
+        <input type="radio" name="gender" value="female">Female
+        <input type="radio" name="gender" value="male">Male
+        <input type="radio" name="gender" value="other">Other
+        <span class="error">* <?php echo $genderErr;?></span>
+        <br><br>
+        <label for="hobby">Hobby</label>
+        <select name="hobby" id="hobby" multiple>
+        </select> 
+        <button type="button" id="add_hobby">New Hobby</button>
+        <br><br>
+        <div id="add_new" style="display: none;">
+            <label for="code">Add Hobyy</label>
+            <input type="text" name="new_hobby" id="hobby_value">
+            <button type="button" id="create_hobby">Add Hobby</button>
+            <br><br>
+        </div>
+        <input type="submit" name="submit" value="Submit">
+    </form>
+</body>
+<script>
+    var hobbies = ['game', 'football', 'golf'];
+    function createNewOption(value) {
+        var select = document.getElementById('hobby');
+        var element = document.createElement('option');
+        element.textContent = value;
+        element.value = value;
+        select.appendChild(element);
+    }
+    function showHobby() {
+        for (var i = 0; i < hobbies.length; i++) {
+            createNewOption(hobbies[i]);
+        }
+    }
+    this.showHobby();
+
+    var add_hobby = document.getElementById('add_hobby');
+    add_hobby.addEventListener('click', function (e) {
+        var new_hobby = document.getElementById('add_new');
+        if(new_hobby.style.display === "none") {
+            document.getElementById('add_new').style.display = "block";
+        }
+        else {
+            document.getElementById('add_new').style.display = "none";
+        }
+    });
+    var create_hobby = document.getElementById('create_hobby');
+    create_hobby.addEventListener('click', function (e) {
+        var value = document.getElementById('hobby_value').value;
+        createNewOption(value);
+    });
+</script>
+</html>
