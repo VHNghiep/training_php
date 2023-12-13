@@ -10,8 +10,8 @@
 </head>
 <body>
 <?php
-$code = $user_name = $first_name = $last_name = $email = $date_of_birth = $gender = "";
-$code_err = $user_name_err = $first_name_err = $last_name_err = $email_err = $date_of_birth_err = $gender_err = "";
+$code = $user_name = $first_name = $last_name = $email = $date_of_birth = $gender = $hobby = "";
+$code_err = $user_name_err = $first_name_err = $last_name_err = $email_err = $date_of_birth_err = $gender_err = $hobby_err = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST["code"])) {
         $code_err = "Code is required";
@@ -71,7 +71,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $gender_err = "Gender is required";
     }
 
-
 }
 
 function test_input($data) {
@@ -121,6 +120,7 @@ function test_input($data) {
             <label for="code">Add Hobyy</label>
             <input type="text" name="new_hobby" id="hobby_value">
             <button type="button" id="create_hobby">Add Hobby</button>
+            <span class="error">* <span id="hobby_err"></span></span>
             <br><br>
         </div>
         <input type="submit" name="submit" value="Submit">
@@ -155,7 +155,12 @@ function test_input($data) {
     var create_hobby = document.getElementById('create_hobby');
     create_hobby.addEventListener('click', function (e) {
         var value = document.getElementById('hobby_value').value;
-        createNewOption(value);
+        if (value != '') {
+            document.getElementById("hobby_err").innerHTML = "";
+            createNewOption(value);
+        } else {
+            document.getElementById("hobby_err").innerHTML = "Hobby không được để trống";
+        }
     });
 </script>
 </html>
