@@ -10,13 +10,65 @@
 </head>
 <body>
 <?php
-$code = $user_name = $first_name = $last_name = $email = $date_of_birth = $gender = $hobbies = "";
-$code_err = $user_name_err = $first_name_err = $last_name_err = $email_err = $date_of_birth_err = $gender_err = $hobbies_err = "";
+$code = $user_name = $first_name = $last_name = $email = $date_of_birth = $gender = "";
+$code_err = $user_name_err = $first_name_err = $last_name_err = $email_err = $date_of_birth_err = $gender_err = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST["code"])) {
         $code_err = "Code is required";
     } else {
-        $name = test_input($_POST["name"]);
+        $code = test_input($_POST["code"]);
+        if (!preg_match("/^THOR000[a-z][0->9]{1,7}+$/", $code)) {
+            $code_err = "THOR000 + a->z có 1 ký tự + number có 1->9 ký tự. Max 15 ký tự";
+        }
+    }
+
+    if (empty($_POST["user_name"])) {
+        $user_name_err = "User name is required";
+    } else {
+        $user_name = test_input($_POST["user_name"]);
+        if (!preg_match("/^[^\s\d]{1,20}$/", $user_name)) {
+            $user_name_err = "Không được chứa khoảng trắng, không có chữ số, tối đa 20 ký tự";
+        }
+    }
+
+    if (empty($_POST["first_name"])) {
+        $first_name_err = "First name is required";
+    } else {
+        $first_name = test_input($_POST["first_name"]);
+        if (!preg_match("/^[^\d]{1,255}$/", $first_name)) {
+            $first_name_err = "Không có chữ số, max 255, min 1";
+        }
+    }
+
+    if (empty($_POST["last_name"])) {
+        $last_name_err = "Last name is required";
+    } else {
+        $last_name = test_input($_POST["last_name"]);
+        if (!preg_match("/^[^\d]{1,255}$/", $last_name)) {
+            $last_name_err = "Không có chữ số, max 255, min 1";
+        }
+    }
+
+    if (empty($_POST["email"])) {
+        $email_err = "Email is required";
+    } else {
+        $email = test_input($_POST["email"]);
+        if (!preg_match("/^\S+@\S+\.\S+$/", $email)) {
+            $email_err = "Phải là định dạng email";
+        }
+    }
+
+    if (empty($_POST["date_of_birth"])) {
+        $date_of_birth_err = "Date of birth is required";
+    } else {
+        $date_of_birth = test_input($_POST["date_of_birth"]);
+        if (!preg_match("/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/", $date_of_birth)) {
+            $date_of_birth_err = "Phải là định dạng dd/mm/yyyy";
+        }
+    }
+
+    if (empty($_POST["gender"])) {
+        $gender_err = "Gender is required";
     }
 
 
@@ -29,35 +81,36 @@ function test_input($data) {
     return $data;
 }
 ?>
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
-        <label for="code">Code</label>
+    <form action="" method="post">
+        <label>Code</label>
         <input type="text" name="code" id="">
         <span class="error">* <?php echo $code_err;?></span>
         <br><br>
-        <label for="code">User Name</label>
+        <label>User Name</label>
         <input type="text" name="user_name" id="">
         <span class="error">* <?php echo $user_name_err;?></span>
         <br><br>
-        <label for="code">First Name</label>
+        <label>First Name</label>
         <input type="text" name="first_name" id="">
-        <span class="error">* <?php echo $user_name_err;?></span>
+        <span class="error">* <?php echo $first_name_err;?></span>
         <br><br>
-        <label for="code">Last Name</label>
+        <label">Last Name</label>
         <input type="text" name="last_name" id="">
-        <span class="error">* <?php echo $user_name_err;?></span>
+        <span class="error">* <?php echo $last_name_err;?></span>
         <br><br>
-        <label for="code">Email</label>
-        <input type="email" name="email" id="">
-        <span class="error">* <?php echo $user_name_err;?></span>
+        <label>Email</label>
+        <input type="text" name="email" id="">
+        <span class="error">* <?php echo $email_err;?></span>
         <br><br>
-        <label for="code">Date Of Birth</label>
-        <input type="date" name="date_of_birth" id="">
-        <span class="error">* <?php echo $user_name_err;?></span>
+        <label>Date Of Birth</label>
+        <input type="text" name="date_of_birth" id="">
+        <span class="error">* <?php echo $date_of_birth_err;?></span>
         <br><br>
         Gender:
         <input type="radio" name="gender" value="female">Female
         <input type="radio" name="gender" value="male">Male
         <input type="radio" name="gender" value="other">Other
+        <span class="error">* <?php echo $gender_err;?></span>
         <br><br>
         <label for="hobby">Hobby</label>
         <select name="hobbies" id="hobby" multiple>
